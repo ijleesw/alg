@@ -1,0 +1,6 @@
+#!/bin/bash
+
+code=$(cat prelude.h a.cc | grep -v "prelude.h")
+line=$(echo "$code" | wc -l | awk '{print $1}')
+echo "$code" | pbcopy
+echo "$line lines copied into clipboard."
