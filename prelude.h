@@ -1,31 +1,38 @@
 #include "bits/stdc++.h"
 
-#define DEFIN(x) int _##x; scanf("%d", &_##x); const int x = _##x
+#define DEFIN(x) defin_t _##x; scanf(defin_format, &_##x); const defin_t x = _##x
 #define DEFIN2(x, y) DEFIN(x); DEFIN(y)
 #define DEFIN3(x, y, z) DEFIN(x); DEFIN(y); DEFIN(z)
 #define DEFIN4(x, y, z, w) DEFIN(x); DEFIN(y); DEFIN(z); DEFIN(w)
 #define DEFIN5(x, y, z, w, v) DEFIN(x); DEFIN(y); DEFIN(z); DEFIN(w); DEFIN(v)
 #define DEFCIN(type, x) type _##x; ::std::cin >> _##x ; const type x = ::std::move(_##x)
-#define IN(x) scanf("%d", &x)
+#define DEFLINE(x) \
+    ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
+#define IN(x) scanf(defin_format, &x)
 #define CIN(x) ::std::cin >> x
+
 #define OUT(x) printf("%d ", x)
-#define COUT(x) ::std::cout << x << " "
 #define OUTLN(x) printf("%d\n", x)
+#define COUT(x) ::std::cout << x << " "
 #define COUTLN(x) ::std::cout << x << "\n"
 #define LN() printf("\n")
 #define PRINT(...) ::std::cout << format(__VA_ARGS__);
 #define PRINTLN(...) ::std::cout << format(__VA_ARGS__) << "\n";
 
 #define LOOP(x) for (int _loop_macro = 0; _loop_macro < (x); ++_loop_macro)
+#define FOR(i, n) for (int i = 0; i < (n); ++i)
+#define FOR1(i, n) for (int i = 1; i <= (n); ++i)
+
 #define MP(x, y) ::std::make_pair(x, y)
 #define BOARD(x, y, N, M) (0 <= x && x < N && 0 <= y && y < M)
 
 ///////////////////////////////////////////////////////////////////////////////
-// container sfinae
+// container sfinae & helper
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename> struct _is_vector : std::false_type {};
-template <typename T, typename Alloc> struct _is_vector<std::vector<T, Alloc>> : std::true_type {};
+template <typename> struct _is_container : std::false_type {};
+template <typename T, typename Alloc> struct _is_container<std::vector<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::deque<T, Alloc>> : std::true_type {};
 
 template <typename> struct _is_pair : std::false_type {};
 template <typename T1, typename T2> struct _is_pair<std::pair<T1, T2>> : std::true_type {};
@@ -34,9 +41,22 @@ template <typename> struct _is_string : std::false_type {};
 template <> struct _is_string<std::string> : std::true_type {};
 template <typename T> using _is_string_decay = _is_string<std::decay_t<T>>;
 
+template <typename Container>
+int len(const Container& c) {
+    return c.size();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // string formatter
 ///////////////////////////////////////////////////////////////////////////////
+
+std::string format() {
+    return {};
+}
+
+std::string format(const char* fmt) {
+    return {fmt};
+}
 
 template <typename T>
 std::string format(const char* fmt, T&& arg) {
@@ -86,7 +106,7 @@ std::ostream& operator<< (std::ostream& out, const T& v) {
     return out;
 }
 
-template <typename T, typename std::enable_if_t<_is_vector<T>::value>* = nullptr>
+template <typename T, typename std::enable_if_t<_is_container<T>::value>* = nullptr>
 std::ostream& operator<< (std::ostream& out, const T& v) {
     if (v.empty()) {
         out << "[]";
