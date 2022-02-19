@@ -47,6 +47,30 @@ int len(const Container& c) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// STL ostream
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename T, typename std::enable_if_t<_is_pair<T>::value>* = nullptr>
+std::ostream& operator<< (std::ostream& out, const T& v) {
+    out << "(" << v.first << ", " << v.second << ")";
+    return out;
+}
+
+template <typename T, typename std::enable_if_t<_is_container<T>::value>* = nullptr>
+std::ostream& operator<< (std::ostream& out, const T& v) {
+    if (v.empty()) {
+        out << "[]";
+    } else {
+        out << "[";
+        for (const auto& e : v) {
+            out << e << " ";
+        }
+        out << "\b]";
+    }
+    return out;
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // string formatter
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -94,30 +118,6 @@ std::string format(const char* fmt, T&& arg, Args&&... args) {
         }
     }
     return res;
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// for debug
-///////////////////////////////////////////////////////////////////////////////
-
-template <typename T, typename std::enable_if_t<_is_pair<T>::value>* = nullptr>
-std::ostream& operator<< (std::ostream& out, const T& v) {
-    out << format("({}, {})", v.first, v.second);
-    return out;
-}
-
-template <typename T, typename std::enable_if_t<_is_container<T>::value>* = nullptr>
-std::ostream& operator<< (std::ostream& out, const T& v) {
-    if (v.empty()) {
-        out << "[]";
-    } else {
-        out << "[";
-        for (const auto& e : v) {
-            out << e << " ";
-        }
-        out << "\b]";
-    }
-    return out;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
