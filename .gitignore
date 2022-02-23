@@ -1,6 +1,7 @@
 # git update-index --skip-worktree a.cc
 a.cc
 a.out
+_playground.h
 
 *.dSYM
 *.swp

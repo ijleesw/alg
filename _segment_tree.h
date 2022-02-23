@@ -1,3 +1,7 @@
+///////////////////////////////////////////////////////////////////
+// BASIC SEGMENT TREE
+///////////////////////////////////////////////////////////////////
+
 template <typename Sum = int, typename Add = Sum>
 class SegmentTree {
 public:
@@ -18,7 +22,7 @@ public:
 // protected:
 // Modify this part as needed.
     Sum addOp(const Sum& lhs, const Add& rhs) {
-        return lhs + rhs.
+        return lhs + rhs;
     }
 
     Sum sumOp(const Sum& lhs, const Sum& rhs) {
@@ -52,7 +56,9 @@ public:
     vector<Sum> seg_;
 };
 
-
+///////////////////////////////////////////////////////////////////
+// LAZY PROPAGATION SEGMENT TREE
+///////////////////////////////////////////////////////////////////
 
 template <typename Sum = int, typename Lazy = Sum>
 class LazyPropagationSegmentTree {
@@ -145,3 +151,55 @@ public:
     vector<Lazy> lazy_;
 };
 
+///////////////////////////////////////////////////////////////////
+// MERGE SORT (SEGMENT) TREE
+///////////////////////////////////////////////////////////////////
+
+template <typename Elt>
+class MergeSortTree {
+public:
+    MergeSortTree(const vector<Elt>& v) : N2_(upper2(v.size())), seg_(N2_ * 2) {
+        for (int idx = v.size() + N2_ - 1; idx >= 1; --idx) {
+            if (idx >= N2_) {
+                seg_[idx].push_back(v[idx - N2_]);
+            } else {
+                auto& l = seg_[idx * 2];
+                auto& r = seg_[idx * 2 + 1];
+                seg_[idx].resize(l.size() + r.size());
+                merge(begin(l), end(l), begin(r), end(r), begin(seg_[idx]));
+            }
+        }
+    }
+
+// Modify this part as needed.
+    int query(const int l, const int r, const int k) {  // right exclusive
+        return queryHelper(0, N2_, 1, l, r, k, [](auto& v, auto k) {
+            return lower_bound(begin(v), end(v), k) - begin(v);
+        });
+    }
+
+    template <typename Func>
+    int queryHelper(
+            const int seg_l, const int seg_r, const int idx,
+            const int l, const int r, const int k, const Func& func) {
+        if (r <= seg_l || seg_r <= l) {
+            return 0;
+        } else if (l <= seg_l && seg_r <= r) {
+            return func(seg_[idx], k);
+        } else {
+            const auto seg_m = (seg_l + seg_r) / 2;
+            return queryHelper(seg_l, seg_m, idx * 2, l, r, k, func) +
+                queryHelper(seg_m, seg_r, idx * 2 + 1, l, r, k, func);
+        }
+    }
+
+    int upper2(int n, int start = 1) {
+        for (; n > 0; start *= 2, n /= 2) {
+            ;
+        }
+        return start;
+    }
+
+    const int N2_;
+    vector<vector<Elt>> seg_;
+};

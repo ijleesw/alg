@@ -1,6 +1,6 @@
 #include "bits/stdc++.h"
 
-#define DEFIN(x) defin_t _##x; scanf(defin_format, &_##x); const defin_t x = _##x
+#define DEFIN(x) int _##x; scanf("%d", &_##x); const int x = _##x
 #define DEFIN2(x, y) DEFIN(x); DEFIN(y)
 #define DEFIN3(x, y, z) DEFIN(x); DEFIN(y); DEFIN(z)
 #define DEFIN4(x, y, z, w) DEFIN(x); DEFIN(y); DEFIN(z); DEFIN(w)
@@ -8,8 +8,9 @@
 #define DEFCIN(type, x) type _##x; ::std::cin >> _##x ; const type x = ::std::move(_##x)
 #define DEFLINE(x) \
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
-#define IN(x) scanf(defin_format, &x)
+#define IN(x) scanf("%d", &x)
 #define CIN(x) ::std::cin >> x
+#define DETACH_STDIO ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0)
 
 #define OUT(x) printf("%d ", x)
 #define OUTLN(x) printf("%d\n", x)
@@ -33,6 +34,7 @@
 template <typename> struct _is_container : std::false_type {};
 template <typename T, typename Alloc> struct _is_container<std::vector<T, Alloc>> : std::true_type {};
 template <typename T, typename Alloc> struct _is_container<std::deque<T, Alloc>> : std::true_type {};
+template <typename T, size_t N> struct _is_container<std::array<T, N>> : std::true_type {};
 
 template <typename> struct _is_pair : std::false_type {};
 template <typename T1, typename T2> struct _is_pair<std::pair<T1, T2>> : std::true_type {};
@@ -63,9 +65,9 @@ std::ostream& operator<< (std::ostream& out, const T& v) {
     } else {
         out << "[";
         for (const auto& e : v) {
-            out << e << " ";
+            out << e << ", ";
         }
-        out << "\b]";
+        out << "\b\b]";
     }
     return out;
 }
@@ -121,8 +123,20 @@ std::string format(const char* fmt, T&& arg, Args&&... args) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// hash pair
+// improved pair
 ///////////////////////////////////////////////////////////////////////////////
+
+template <typename T1, typename T2>
+std::pair<T1, T2>& operator+=(std::pair<T1, T2>& a, const std::pair<T1, T2>& b) {
+	a.first += b.first, a.second += b.second;
+	return a;
+}
+
+template <typename T1, typename T2>
+std::pair<T1, T2>& operator-=(std::pair<T1, T2>& a, const std::pair<T1, T2>& b) {
+	a.first -= b.first, a.second -= b.second;
+	return a;
+}
 
 namespace std {
 
