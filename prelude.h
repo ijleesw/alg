@@ -10,7 +10,7 @@
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
 #define IN(x) scanf("%d", &x)
 #define CIN(x) ::std::cin >> x
-#define DETACH_STDIO() ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0)
+#define DETACH_STDIO() { ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0) }
 
 #define OUT(x) printf("%d ", x)
 #define OUTLN(x) printf("%d\n", x)
@@ -27,6 +27,8 @@
 
 #define MP(x, y) ::std::make_pair(x, y)
 #define FAT ::std::forward_as_tuple
+
+#define ARR(N) ::std::array<int, N>
 
 ///////////////////////////////////////////////////////////////////////////////
 // macro-like functions & helpers
