@@ -5,10 +5,10 @@
 template <typename Sum = int, typename Add = Sum>
 class SegmentTree {
 public:
-    SegmentTree(int size) : N2(upper2(size)), seg_(N2 * 2, kDefaultSum) {}
+    SegmentTree(int size) : N2_(upper2(size)), seg_(N2_ * 2, kDefaultSum) {}
 
     void add(const int pos, const Add val) {
-        int idx = N2 + pos;
+        int idx = N2_ + pos;
         while (idx > 0) {
             seg_[idx] = addOp(seg_[idx], val);
             idx /= 2;
@@ -16,7 +16,11 @@ public:
     }
 
     Sum sum(const int l, const int r) {  // right exclusive
-        return sumHelper(0, N2, 1, l, r);
+        return sumHelper(0, N2_, 1, l, r);
+    }
+
+    int size() const {
+        return N2_;
     }
 
 // protected:
@@ -52,7 +56,7 @@ public:
         return res;
     }
 
-    const int N2;
+    const int N2_;
     vector<Sum> seg_;
 };
 

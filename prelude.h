@@ -10,7 +10,7 @@
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
 #define IN(x) scanf("%d", &x)
 #define CIN(x) ::std::cin >> x
-#define DETACH_STDIO ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0)
+#define DETACH_STDIO() ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0)
 
 #define OUT(x) printf("%d ", x)
 #define OUTLN(x) printf("%d\n", x)
@@ -19,22 +19,46 @@
 #define LN() printf("\n")
 #define PRINT(...) ::std::cout << format(__VA_ARGS__);
 #define PRINTLN(...) ::std::cout << format(__VA_ARGS__) << "\n";
+#define CIN_DUMMY_LINE() { ::std::string line; ::std::getline(::std::cin, line); }
 
 #define LOOP(x) for (int _loop_macro = 0; _loop_macro < (x); ++_loop_macro)
 #define FOR(i, n) for (int i = 0; i < (n); ++i)
 #define FOR1(i, n) for (int i = 1; i <= (n); ++i)
 
 #define MP(x, y) ::std::make_pair(x, y)
-#define BOARD(x, y, N, M) (0 <= x && x < N && 0 <= y && y < M)
+#define FAT ::std::forward_as_tuple
+
+///////////////////////////////////////////////////////////////////////////////
+// macro-like functions & helpers
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+void Maxin(T&& x, const T& y) { x = ::std::max(x, y); }
+
+template <typename T>
+void Minin(T&& x, const T& y) { x = ::std::min(x, y); }
+
+template <typename T>
+bool Board(const T& x, const T& y, const T& N, const T& M) { return 0 <= x && x < N && 0 <= y && y < M; }
+
+template <typename T>
+void Sort(T&& v) { ::std::sort(begin(v), end(v)); }
 
 ///////////////////////////////////////////////////////////////////////////////
 // container sfinae & helper
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename> struct _is_container : std::false_type {};
-template <typename T, typename Alloc> struct _is_container<std::vector<T, Alloc>> : std::true_type {};
-template <typename T, typename Alloc> struct _is_container<std::deque<T, Alloc>> : std::true_type {};
 template <typename T, size_t N> struct _is_container<std::array<T, N>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::vector<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::list<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::deque<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::set<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::map<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::multiset<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::multimap<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::unordered_set<T, Alloc>> : std::true_type {};
+template <typename T, typename Alloc> struct _is_container<std::unordered_map<T, Alloc>> : std::true_type {};
 
 template <typename> struct _is_pair : std::false_type {};
 template <typename T1, typename T2> struct _is_pair<std::pair<T1, T2>> : std::true_type {};
@@ -55,6 +79,20 @@ int len(const Container& c) {
 template <typename T, typename std::enable_if_t<_is_pair<T>::value>* = nullptr>
 std::ostream& operator<< (std::ostream& out, const T& v) {
     out << "(" << v.first << ", " << v.second << ")";
+    return out;
+}
+
+// TODO: make it generic
+std::ostream& operator<< (std::ostream& out, const std::tuple<int, int, int>& t) {
+    auto [a, b, c] = t;
+    out << "(" << a << ", " << b << ", " << c << ")";
+    return out;
+}
+
+// TODO: make it generic
+std::ostream& operator<< (std::ostream& out, const std::tuple<int, int, int, int>& t) {
+    auto [a, b, c, d] = t;
+    out << "(" << a << ", " << b << ", " << c << ", " << d << ")";
     return out;
 }
 
