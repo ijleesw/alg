@@ -5,3 +5,5 @@ _playground.h
 
 *.dSYM
 *.swp
+
+.venv

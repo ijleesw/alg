@@ -9,9 +9,9 @@ unordered_map<int, int> zipIndex(const T& arr) {
     v.resize(unique(begin(v), end(v)) - begin(v));
 
     unordered_map<int, int> mm;
-    FOR(i, N) {
-        mm[v[i]] = i;
+    int cnt = 0;
+    for (auto e : v) {
+        mm[e] = cnt++;
     }
     return mm;
 }
-
