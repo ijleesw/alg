@@ -10,13 +10,13 @@
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
 #define IN(x) scanf("%d", &x)
 #define CIN(x) ::std::cin >> x
-#define DETACH_STDIO() { ::ios::sync_with_stdio(0); ::std::cin.tie(0); ::std::cout.tie(0) }
 
-#define OUT(x) printf("%d ", x)
-#define OUTLN(x) printf("%d\n", x)
+#define OUT(x) printf("%d", x)
+#define OUTSP(x) OUT(x); printf(" ")
+#define OUTLN(x) OUT(x); printf("\n")
+#define LN() printf("\n")
 #define COUT(x) ::std::cout << x << " "
 #define COUTLN(x) ::std::cout << x << "\n"
-#define LN() printf("\n")
 #define PRINT(...) ::std::cout << format(__VA_ARGS__);
 #define PRINTLN(...) ::std::cout << format(__VA_ARGS__) << "\n";
 #define CIN_DUMMY_LINE() { ::std::string line; ::std::getline(::std::cin, line); }
@@ -34,11 +34,17 @@
 // macro-like functions & helpers
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename T>
-void Maxin(T&& x, const T& y) { x = ::std::max(x, y); }
+void detach_stdio() {
+    ::std::ios::sync_with_stdio(0);
+    ::std::cin.tie(0);
+    ::std::cout.tie(0);
+}
 
 template <typename T>
-void Minin(T&& x, const T& y) { x = ::std::min(x, y); }
+void Maxin(T& x, const T& y) { x = ::std::max(x, y); }
+
+template <typename T>
+void Minin(T& x, const T& y) { x = ::std::min(x, y); }
 
 template <typename T>
 bool Board(const T& x, const T& y, const T& N, const T& M) { return 0 <= x && x < N && 0 <= y && y < M; }
