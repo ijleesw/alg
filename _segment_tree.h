@@ -60,6 +60,130 @@ public:
     vector<Sum> seg_;
 };
 
+
+///////////////////////////////////////////////////////////////////
+// BOTTOM-UP SEGMENT TREE
+///////////////////////////////////////////////////////////////////
+
+template <typename Val = int>
+class SegmentTree {
+public:
+  SegmentTree(int N) : N_(N), seg_(N * 2, 0) {}
+
+  void add(int idx, Val val) {
+    idx += N_;
+    seg_[idx] = op(seg_[idx], val);
+    idx /= 2;
+    while (idx >= 1) {
+      seg_[idx] = op(seg_[idx * 2], seg_[idx * 2 + 1]);
+      idx /= 2;
+    }
+  }
+
+  Val sum(int l, int r) {  // 0-based [l, r).
+    l += N_;
+    r += N_;
+    Val ret = 0;
+    while (l < r) {
+      if (l % 2 == 1) {
+        ret = op(ret, seg_[l]);
+        ++l;
+      }
+      if (r % 2 == 1) {
+        --r;
+        ret = op(ret, seg_[r]);
+      }
+      l /= 2;
+      r /= 2;
+    }
+    return ret;
+  }
+
+// protected:
+// Modify this part as needed.
+  Val op(const Val& lhs, const Val& rhs) {
+    return lhs + rhs;
+  }
+
+// private:
+  const int N_;
+  vector<Val> seg_;
+};
+
+
+///////////////////////////////////////////////////////////////////
+// 2D SEGMENT TREE
+///////////////////////////////////////////////////////////////////
+
+template <typename Val = int>
+class SegmentTree2D {
+public:
+  SegmentTree2D(int N, int M) : N_(N), M_(M), seg_(N * 2 + 1, vector<Val>(M * 2 + 1, kDefaultVal)) {}
+
+  void add(int x, int y, Val val) {
+    x += N_;
+
+    int yy = y + M_;
+    seg_[x][yy] = op(seg_[x][yy], val);
+    while ((yy >>= 1) >= 1) {
+      seg_[x][yy] = op(seg_[x][yy << 1], seg_[x][yy << 1 | 1]);
+    }
+
+    while ((x >>= 1) >= 1) {
+      int yy = y + M_;
+      while (yy >= 1) {
+        seg_[x][yy] = op(seg_[x << 1][yy], seg_[x << 1 | 1][yy]);
+        yy >>= 1;
+      }
+    }
+  }
+
+  Val sum1D(int x, int l, int r) {  // 0-based [l, r) in row x.
+    auto& seg = seg_[x];
+    l += M_, r += M_;
+    Val ret = 0;
+    while (l < r) {
+      if (l & 1) {
+        ret = op(ret, seg[l++]);
+      }
+      if (r & 1) {
+        ret = op(ret, seg[--r]);
+      }
+      l >>= 1, r >>= 1;
+    }
+    return ret;
+  }
+
+  Val sum(int x1, int y1, int x2, int y2) {  // 0-based [(x1, y1), (x2, y2)).
+    x1 += N_, x2 += N_;
+    Val ret = 0;
+    while (x1 < x2) {
+      if (x1 & 1) {
+        ret = op(ret, sum1D(x1++, y1, y2));
+      }
+      if (x2 & 1) {
+        ret = op(ret, sum1D(--x2, y1, y2));
+      }
+      x1 >>= 1, x2 >>= 1;
+    }
+    return ret;
+  }
+
+// protected:
+// Modify this part as needed.
+  static const Val kDefaultVal = 0;
+
+  Val op(const Val& lhs, const Val& rhs) {
+    return lhs + rhs;
+  }
+
+// private:
+  const int N_;
+  const int M_;
+  vector<vector<Val>> seg_;
+};
+
+
 ///////////////////////////////////////////////////////////////////
 // LAZY PROPAGATION SEGMENT TREE
 ///////////////////////////////////////////////////////////////////
@@ -154,6 +278,7 @@ public:
     vector<Sum> seg_;
     vector<Lazy> lazy_;
 };
+
 
 ///////////////////////////////////////////////////////////////////
 // LAZY PROPAGATION SEGMENT TREE w/ DEACTIVATE
@@ -281,6 +406,7 @@ public:
     vector<Lazy> lazy_;
     vector<int> active_;
 };
+
 
 ///////////////////////////////////////////////////////////////////
 // MERGE SORT TREE
