@@ -27,7 +27,7 @@ public:
 
 // protected:
 // Modify this part as needed.
-  static const Val kDefaultVal = 0;
+  const Val kDefaultVal = 0;
   Val accumOp(const Val& lhs, const Val& rhs) {
     return lhs + rhs;
   }
@@ -77,7 +77,8 @@ public:
 
 // protected:
 // Modify this part as needed.
-  static const Val kDefaultVal = 0;
+  const Val kDefaultVal = 0;
+
   Val accumOp(const Val& lhs, const Val& rhs) {
     return lhs + rhs;
   }

@@ -16,17 +16,17 @@ public:
         if (ra == rb) {
             return false;
         }
-        if (sz(ra) < sz(rb)) {
+        if (size(ra) < size(rb)) {
             swap(ra, rb);
         }
-        // now sz(ra) >= sz(rb).
-        arr_[ra] -= sz(rb);
+        // now size(ra) >= size(rb).
+        arr_[ra] -= size(rb);
         arr_[rb] = ra;
         return true;
     }
 
 // private:
-    int sz(int n) {
+    int size(int n) {
         return -arr_[root(n)];
     }
 
