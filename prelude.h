@@ -9,6 +9,10 @@
 #define DEFLINE(x) \
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
 #define IN(x) scanf("%d", &x)
+#define IN2(x, y) IN(x); IN(y)
+#define IN3(x, y, z) IN(x); IN(y); IN(z)
+#define IN4(x, y, z, w) IN(x); IN(y); IN(z); IN(w)
+#define IN5(x, y, z, w, v) IN(x); IN(y); IN(z); IN(w); IN(v)
 #define CIN(x) ::std::cin >> x
 
 #define OUT(x) printf("%d", x)
