@@ -6,7 +6,11 @@ namespace FFT {
 
     void FFT(vector<cplx>& f, bool inv = false) {
       int n = f.size();
-      // Bit reversal (ref. https://tistory.joonhyung.xyz/6)
+      // Bit reversal.
+      // Given a bitset,
+      //   we push it to the first half if even and to the second half if odd.
+      //   It means that the leading bit is set by (equals to) the trailing bit.
+      //   (ref. https://tistory.joonhyung.xyz/6)
       for (int i = 1, j = 0; i < n; ++i){
         int b = n/2;
         while (!((j ^= b) & b)) {
