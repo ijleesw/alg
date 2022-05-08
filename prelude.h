@@ -29,8 +29,12 @@
 #define FOR(i, n) for (int i = 0; i < (n); ++i)
 #define FOR1(i, n) for (int i = 1; i <= (n); ++i)
 
+#define RANGE(x) begin(x), end(x)
+
 #define MP(x, y) ::std::make_pair(x, y)
-#define FAT ::std::forward_as_tuple
+#define L first
+#define R second
+#define TIE ::std::forward_as_tuple
 
 #define ARR(N) ::std::array<int, N>
 

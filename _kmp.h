@@ -1,5 +1,6 @@
-namespace {
+namespace KMP {
 // Computes fallback(=fail) array in kmp.
+// fb[i] = j  <==>  go to s[j] if the matching fails at s[i]
 template <typename T>
 vector<int> fallback(const T& s) {
     vector<int> fb(s.size() + 1, 0);
@@ -17,7 +18,7 @@ vector<int> fallback(const T& s) {
 
 // Returns start positions of matching in s (check t \in s).
 template <typename T1, typename T2>
-vector<int> kmp(const T1& s, const T2& t) {
+vector<int> startsAt(const T1& s, const T2& t, bool first_only = false) {
     int slen = s.size();
     int tlen = t.size();
 
@@ -31,11 +32,13 @@ vector<int> kmp(const T1& s, const T2& t) {
             ++j;
             if (j == tlen) {
                 res.push_back(i - tlen + 1);
-                // Add break here if only one match is needed.
+                if (first_only) {
+                    break;
+                }
                 j = fb[j];
             }
         }
     }
     return res;
 }
-}   // anonymous namespace for kmp
+}   // namespace KMP
