@@ -1,6 +1,8 @@
 # git update-index --skip-worktree a.cc
 a.cc
 a.out
+# git update-index --skip-worktree a.py
+a.py
 _playground.h
 
 *.dSYM

@@ -1,7 +1,8 @@
 import pyperclip
+import sys
 
 merged_cc = ''
-with open('a.cc', 'r') as f:
+with open(sys.argv[1], 'r') as f:
     for line in f:
         if line.startswith('#include'):
             s = line.split('"')
