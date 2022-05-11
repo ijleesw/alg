@@ -57,9 +57,6 @@ void Minin(T& x, const T& y) { x = ::std::min(x, y); }
 template <typename T>
 bool Board(const T& x, const T& y, const T& N, const T& M) { return 0 <= x && x < N && 0 <= y && y < M; }
 
-template <typename T>
-void Sort(T&& v) { ::std::sort(begin(v), end(v)); }
-
 ///////////////////////////////////////////////////////////////////////////////
 // container sfinae & helper
 ///////////////////////////////////////////////////////////////////////////////
