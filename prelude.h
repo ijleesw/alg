@@ -13,6 +13,8 @@
 #define IN3(x, y, z) IN(x); IN(y); IN(z)
 #define IN4(x, y, z, w) IN(x); IN(y); IN(z); IN(w)
 #define IN5(x, y, z, w, v) IN(x); IN(y); IN(z); IN(w); IN(v)
+#define FILLIN(arr, N) \
+    ::std::vector<int> arr(N); for (auto& e : arr) { IN(e); } ((void)0)
 #define CIN(x) ::std::cin >> x
 
 #define OUT(x) printf("%d", x)

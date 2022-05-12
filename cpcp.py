@@ -12,5 +12,6 @@ with open(sys.argv[1], 'r') as f:
         else:
             merged_cc += line
 pyperclip.copy(merged_cc)
+
 line_cnt = merged_cc.count('\n') + 1
-print(f'{line_cnt} lines copied into clipboard.')
+print(f'{line_cnt} lines ({len(merged_cc)} bytes) copied into clipboard.')
