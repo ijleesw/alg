@@ -133,8 +133,11 @@ std::string format() {
     return {};
 }
 
-std::string format(const char* fmt) {
-    return {fmt};
+template <typename T>
+std::string format(const T& arg) {
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
 }
 
 template <typename T>
