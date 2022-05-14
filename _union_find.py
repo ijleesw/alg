@@ -14,8 +14,9 @@ class UnionFind:
   def merge(self, a, b):
     ra, rb = self.root(a), self.root(b)
     if ra == rb:
-      return
+      return False
     if self.size(ra) < self.size(rb):
       ra, rb = rb, ra   # now self.size(ra) >= self.size(rb).
     self._arr[ra] += self._arr[rb]
     self._arr[rb] = ra
+    return True
