@@ -29,7 +29,7 @@
 
 #define LOOP(x) for (int _loop_macro = 0; _loop_macro < (x); ++_loop_macro)
 #define FOR(i, n) for (int i = 0; i < (n); ++i)
-#define FOR1(i, n) for (int i = 1; i <= (n); ++i)
+#define FOR1(i, n) for (int i = 1; i < (n); ++i)
 
 #define RANGE(x) begin(x), end(x)
 
@@ -133,8 +133,11 @@ std::string format() {
     return {};
 }
 
-std::string format(const char* fmt) {
-    return {fmt};
+template <typename T>
+std::string format(const T& arg) {
+    std::stringstream ss;
+    ss << arg;
+    return ss.str();
 }
 
 template <typename T>
