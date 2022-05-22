@@ -34,8 +34,8 @@
 #define RANGE(x) begin(x), end(x)
 
 #define MP(x, y) ::std::make_pair(x, y)
-#define L first
-#define R second
+#define X first
+#define Y second
 #define TIE ::std::forward_as_tuple
 
 #define ARR(N) ::std::array<int, N>
@@ -48,6 +48,22 @@ void detach_stdio() {
     ::std::ios::sync_with_stdio(0);
     ::std::cin.tie(0);
     ::std::cout.tie(0);
+}
+
+template <typename T = int>
+T getInt() {
+    T ret;
+    ::std::cin >> ret;
+    return ret;
+}
+
+template <typename T = int>
+T getInts(int N) {
+    ::std::vector<T> ret(N);
+    for (auto& e : ret) {
+        ::std::cin >> ret;
+    }
+    return ret;
 }
 
 template <typename T>
@@ -183,9 +199,21 @@ std::string format(const char* fmt, T&& arg, Args&&... args) {
 ///////////////////////////////////////////////////////////////////////////////
 
 template <typename T1, typename T2>
+std::pair<T1, T2> operator+(const std::pair<T1, T2>& a,
+                            const std::pair<T1, T2>& b) {
+	return {a.first + b.first, a.second + b.second};
+}
+
+template <typename T1, typename T2>
 std::pair<T1, T2>& operator+=(std::pair<T1, T2>& a, const std::pair<T1, T2>& b) {
 	a.first += b.first, a.second += b.second;
 	return a;
+}
+
+template <typename T1, typename T2>
+std::pair<T1, T2> operator-(const std::pair<T1, T2>& a,
+                            const std::pair<T1, T2>& b) {
+  return {a.first - b.first, a.second - b.second};
 }
 
 template <typename T1, typename T2>
@@ -208,6 +236,24 @@ public:
 };
 
 }   // namespace std
+
+///////////////////////////////////////////////////////////////////////////////
+// utils
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+std::unordered_map<int, int> zipIndex(T&& arr) {
+    int N = arr.size();
+    std::sort(begin(arr), end(arr));
+    arr.resize(std::unique(begin(arr), end(arr)) - begin(arr));
+
+    std::unordered_map<int, int> mm;
+    int cnt = 0;
+    for (auto e : arr) {
+        mm[e] = cnt++;
+    }
+    return mm;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // end of prelude
