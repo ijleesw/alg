@@ -1,3 +1,4 @@
+template <typename T = int>
 class UnionFind {
 public:
     UnionFind(int n) : arr_(n, -1) {}
@@ -26,11 +27,11 @@ public:
     }
 
 // private:
-    int size(int n) {
+    T size(int n) {
         return -arr_[root(n)];
     }
 
     // Positive: parent idx
     // Negative: -(subtree size)
-    vector<int> arr_;
+    vector<T> arr_;
 };
