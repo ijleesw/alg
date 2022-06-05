@@ -1,35 +1,25 @@
 #include "bits/stdc++.h"
 
-#define DEFIN(x) int _##x; scanf("%d", &_##x); const int x = _##x
 #define DEFIN2(x, y) DEFIN(x); DEFIN(y)
 #define DEFIN3(x, y, z) DEFIN(x); DEFIN(y); DEFIN(z)
 #define DEFIN4(x, y, z, w) DEFIN(x); DEFIN(y); DEFIN(z); DEFIN(w)
 #define DEFIN5(x, y, z, w, v) DEFIN(x); DEFIN(y); DEFIN(z); DEFIN(w); DEFIN(v)
+
 #define DEFCIN(type, x) type _##x; ::std::cin >> _##x ; const type x = ::std::move(_##x)
 #define DEFLINE(x) \
     ::std::string _##x; ::std::getline(::std::cin, _##x); const ::std::string x = ::std::move(_##x)
-#define IN(x) scanf("%d", &x)
+
 #define IN2(x, y) IN(x); IN(y)
 #define IN3(x, y, z) IN(x); IN(y); IN(z)
 #define IN4(x, y, z, w) IN(x); IN(y); IN(z); IN(w)
 #define IN5(x, y, z, w, v) IN(x); IN(y); IN(z); IN(w); IN(v)
-#define FILLIN(arr, N) \
-    ::std::vector<int> arr(N); for (auto& e : arr) { IN(e); } ((void)0)
-#define CIN(x) ::std::cin >> x
 
-#define OUT(x) printf("%d", x)
-#define OUTSP(x) OUT(x); printf(" ")
-#define OUTLN(x) OUT(x); printf("\n")
-#define LN() printf("\n")
-#define COUT(x) ::std::cout << x << " "
-#define COUTLN(x) ::std::cout << x << "\n"
 #define PRINT(...) ::std::cout << format(__VA_ARGS__);
 #define PRINTLN(...) ::std::cout << format(__VA_ARGS__) << "\n";
-#define CIN_DUMMY_LINE() { ::std::string line; ::std::getline(::std::cin, line); }
 
 #define LOOP(x) for (int _loop_macro = 0; _loop_macro < (x); ++_loop_macro)
 #define FOR(i, n) for (int i = 0; i < (n); ++i)
-#define FOR1(i, n) for (int i = 1; i <= (n); ++i)
+#define FOR1(i, n) for (int i = 1; i < (n); ++i)
 
 #define RANGE(x) begin(x), end(x)
 
@@ -44,7 +34,7 @@
 // macro-like functions & helpers
 ///////////////////////////////////////////////////////////////////////////////
 
-void detach_stdio() {
+void ds() {
     ::std::ios::sync_with_stdio(0);
     ::std::cin.tie(0);
     ::std::cout.tie(0);
@@ -123,6 +113,17 @@ std::ostream& operator<< (std::ostream& out, const T& v) {
         out << "\b\b]";
     }
     return out;
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// matrix printer
+///////////////////////////////////////////////////////////////////////////////
+
+template <typename T>
+void printMatrix(const T& mm) {
+  for (const auto& row : mm) {
+    std::cout << row << '\n';
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
