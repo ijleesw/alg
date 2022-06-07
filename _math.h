@@ -5,6 +5,7 @@ tuple<ed, ed, ed> EEA(ed a, ed b) {
   ed r[2] = {a, b};
   ed s[2] = {1, 0};
   ed t[2] = {0, 1};
+
   while (true) {
     ed q = r[0] / r[1];
     ed rr = r[0] - (q * r[1]);
