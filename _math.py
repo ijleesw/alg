@@ -13,7 +13,7 @@ def EEA(a, b):
       return r[1], s[1], t[1]
 
     r[0], r[1], s[0], s[1], t[0], t[1] = \
-      r[1], rr, s[1], ss, t[1], tt
+        r[1], rr, s[1], ss, t[1], tt
 
 # Prefer pow(a, -1, mod) to this function.
 def inverse(a, mod):
