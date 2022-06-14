@@ -20,3 +20,37 @@ def inverse(a, mod):
   gcd, x, y = EEA(a, mod)
   assert(gcd == 1)
   return (x + mod) % mod
+
+# Returns the Möbius array.
+#   mu[1] = 1
+#   mu[2] = mu[3] = mu[5] = ... = -1
+#
+# Slower in C++, faster in PyPy3.
+def mobius(n):  # n: inclusive
+  mu = [0, 1] + [-1] * (n)
+  for i in range(2, len(mu)):
+    if mu[i] == 0:
+      continue
+    for j in range(i*2, len(mu), i):
+      mu[j] -= mu[i]
+  return mu
+
+# Returns Möbius array.
+# Use when primes are needed.
+def mobius(n):  # n: inclusive
+  primes = []
+  visited = [False] * (n+1)
+  mu = [0, 1] + [0] * (n-1)
+
+  for i in range(2, n+1):
+    if not visited[i]:
+      primes.append(i)
+      mu[i] = -1
+    for j in range(0, len(primes)):
+      if i * primes[j] > n:
+        break
+      visited[i * primes[j]] = True
+      if i % primes[j] == 0:
+        break
+      mu[i * primes[j]] = mu[i] * mu[primes[j]]
+  return mu

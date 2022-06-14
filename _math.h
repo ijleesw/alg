@@ -27,3 +27,28 @@ ed inverse(ed a, ed mod) {
   assert(gcd == 1);
   return (x + mod) % mod;
 }
+
+//  Returns the Möbius array.
+//    mu[1] = 1
+//    mu[2] = mu[3] = mu[5] = ... = -1
+vector<int> mobius(int n) {  // n: inclusive
+  vector<int> primes;
+  vector<bool> visited(n + 1, false);
+  vector<int> mu(n + 1, 0);
+  mu[1] = 1;
+
+  for (int i = 2; i <= n; ++i) {
+    if (!visited[i]) {
+      primes.push_back(i);
+      mu[i] = -1;
+    }
+    for (int j = 0; j < primes.size() && i * primes[j] <= n; ++j) {
+      visited[i * primes[j]] = true;
+      if (i % primes[j] == 0) {
+        break;
+      }
+      mu[i * primes[j]] = mu[i] * mu[primes[j]];
+    }
+  }
+  return mu;
+}

@@ -48,10 +48,10 @@ T getInt() {
 }
 
 template <typename T = int>
-T getInts(int N) {
+::std::vector<T> getInts(int N) {
     ::std::vector<T> ret(N);
     for (auto& e : ret) {
-        ::std::cin >> ret;
+        ::std::cin >> e;
     }
     return ret;
 }
@@ -244,7 +244,6 @@ public:
 
 template <typename T>
 std::unordered_map<int, int> zipIndex(T&& arr) {
-    int N = arr.size();
     std::sort(begin(arr), end(arr));
     arr.resize(std::unique(begin(arr), end(arr)) - begin(arr));
 
