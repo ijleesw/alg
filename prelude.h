@@ -84,6 +84,9 @@ template <typename T, typename Alloc> struct _is_container<std::unordered_map<T,
 template <typename> struct _is_pair : std::false_type {};
 template <typename T1, typename T2> struct _is_pair<std::pair<T1, T2>> : std::true_type {};
 
+template <typename> struct _is_vector : std::false_type {};
+template <typename T, typename Alloc> struct _is_vector<std::vector<T, Alloc>> : std::true_type {};
+
 template <typename> struct _is_string : std::false_type {};
 template <> struct _is_string<std::string> : std::true_type {};
 template <typename T> using _is_string_decay = _is_string<std::decay_t<T>>;
@@ -242,12 +245,12 @@ public:
 // utils
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename T>
-std::unordered_map<int, int> zipIndex(T&& arr) {
+template <typename T, typename std::enable_if_t<_is_vector<T>::value>* = nullptr>
+auto zipIndex(T&& arr) -> std::unordered_map<decltype(T)::value_type, int> {
     std::sort(begin(arr), end(arr));
     arr.resize(std::unique(begin(arr), end(arr)) - begin(arr));
 
-    std::unordered_map<int, int> mm;
+    std::unordered_map<decltype(T)::value_type, int> mm;
     int cnt = 0;
     for (auto e : arr) {
         mm[e] = cnt++;
