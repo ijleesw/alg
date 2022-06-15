@@ -245,12 +245,12 @@ public:
 // utils
 ///////////////////////////////////////////////////////////////////////////////
 
-template <typename T, typename std::enable_if_t<_is_vector<T>::value>* = nullptr>
-auto zipIndex(T&& arr) -> std::unordered_map<decltype(T)::value_type, int> {
+template <typename T, typename std::enable_if_t<_is_vector<std::remove_reference_t<T>>::value>* = nullptr>
+auto zipIndex(T&& arr) {
     std::sort(begin(arr), end(arr));
     arr.resize(std::unique(begin(arr), end(arr)) - begin(arr));
 
-    std::unordered_map<decltype(T)::value_type, int> mm;
+    std::unordered_map<typename std::remove_reference_t<T>::value_type, int> mm;
     int cnt = 0;
     for (auto e : arr) {
         mm[e] = cnt++;
